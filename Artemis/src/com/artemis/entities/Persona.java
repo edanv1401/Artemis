@@ -56,7 +56,7 @@ public class Persona implements Serializable {
         this.documento = documento;
         this.nombre = nombre;
     }
-
+    
     public Integer getDocumento() {
         return documento;
     }
