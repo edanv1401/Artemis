@@ -1,36 +1,40 @@
-
 package com.artemis.service;
 
 import com.artemis.entities.Cuentausuario;
+import com.artemis.entities.Persona;
 import com.artemis.util.AES;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
  * @author roca12
  */
 public class ServiceCuentaUsuario {
-    AES aes= new AES();
-    final String key1="shadow";
-    public void crearNuevoCuentaUsuario(String nombre,String pass,Integer persona) {
+
+    AES aes = new AES();
+    final String key1 = "shadow";
+
+    public void crearNuevoCuentaUsuario(String nombre, String pass, Integer persona) {
         EntityManager entitymanager = Persistence.createEntityManagerFactory("LoginPU").createEntityManager();
         entitymanager.getTransaction().begin();
         Cuentausuario cu = new Cuentausuario();
         cu.setId(null);
-        cu.setUsername(aes.encrypt(nombre,key1));
-        cu.setPasswordkey(aes.encrypt(pass,key1));
+        cu.setUsername(aes.encrypt(nombre, key1));
+        cu.setPasswordkey(aes.encrypt(pass, key1));
         cu.setPersona(persona);
         entitymanager.persist(cu);
         entitymanager.getTransaction().commit();
         entitymanager.close();
     }
 
-  public void actualizarCuentaUsuario(Integer id, String pass) {
+    public void actualizarCuentaUsuario(Integer id, String pass) {
         EntityManager entitymanager = Persistence.createEntityManagerFactory("LoginPU").createEntityManager();
         entitymanager.getTransaction().begin();
         Cuentausuario cu = entitymanager.find(Cuentausuario.class, id);
-        cu.setPasswordkey(aes.encrypt(pass,key1));
+        cu.setPasswordkey(aes.encrypt(pass, key1));
         entitymanager.getTransaction().commit();
         entitymanager.close();
     }
@@ -43,12 +47,21 @@ public class ServiceCuentaUsuario {
         return cu;
     }
 
-    public void eliminarPersona(Integer id) {
+    public void eliminarCuentaUsuario(Integer id) {
         EntityManager entitymanager = Persistence.createEntityManagerFactory("LoginPU").createEntityManager();
         entitymanager.getTransaction().begin();
         Cuentausuario cu = entitymanager.find(Cuentausuario.class, id);
         entitymanager.remove(cu);
         entitymanager.getTransaction().commit();
         entitymanager.close();
+    }
+
+    public Persona buscarCuentausuarioNombreIgual(String user) {
+        EntityManager entitymanager = Persistence.createEntityManagerFactory("LoginPU").createEntityManager();
+        Query q = entitymanager.createQuery("select c from Cuentausuario c"
+                + " where c.username = :nom");
+        q.setParameter("nom", aes.encrypt(user, key1));
+        Persona p = (Persona) q.getSingleResult();
+        return p;
     }
 }
