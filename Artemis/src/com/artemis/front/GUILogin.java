@@ -5,13 +5,19 @@
  */
 package com.artemis.front;
 
-import javax.swing.ImageIcon;
+import com.artemis.entities.Cuentausuario;
+import com.artemis.service.ServiceCuentaUsuario;
+import com.artemis.util.AES;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author roca12
  */
 public class GUILogin extends javax.swing.JFrame {
+
+    ServiceCuentaUsuario scu = new ServiceCuentaUsuario();
+    AES aes = new AES();
 
     /**
      * Creates new form GUILogin
@@ -34,11 +40,11 @@ public class GUILogin extends javax.swing.JFrame {
         loginSalir = new javax.swing.JButton();
         loginUsernameLabel = new javax.swing.JLabel();
         loginPasswordLabel = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        loginUsernameTextfield = new javax.swing.JTextField();
+        loginPasswordField = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        loginLogoLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -51,9 +57,19 @@ public class GUILogin extends javax.swing.JFrame {
 
         loginIniciarSesion.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         loginIniciarSesion.setText("Iniciar sesión");
+        loginIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginIniciarSesionActionPerformed(evt);
+            }
+        });
 
         loginSalir.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         loginSalir.setText("Salir");
+        loginSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginSalirActionPerformed(evt);
+            }
+        });
 
         loginUsernameLabel.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         loginUsernameLabel.setText("Username");
@@ -69,15 +85,15 @@ public class GUILogin extends javax.swing.JFrame {
         jLabel1.setText("Sistema ARTEMIS");
         jLabel1.setToolTipText("");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/logo.jpg"))); // NOI18N
-        jLabel3.setText("jLabel3");
+        loginLogoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/logo.jpg"))); // NOI18N
+        loginLogoLabel.setText("jLabel3");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(loginLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(95, 95, 95))
@@ -85,7 +101,7 @@ public class GUILogin extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(loginLogoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
@@ -112,8 +128,8 @@ public class GUILogin extends javax.swing.JFrame {
                             .addComponent(loginUsernameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(loginPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(loginUsernameTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(32, 32, 32))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(71, 71, 71)
@@ -126,12 +142,12 @@ public class GUILogin extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loginUsernameTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(loginUsernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(loginPasswordLabel)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(loginPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
@@ -146,6 +162,26 @@ public class GUILogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loginSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_loginSalirActionPerformed
+
+    private void loginIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginIniciarSesionActionPerformed
+        if (loginUsernameTextfield.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar el username", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (loginPasswordField.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar la contraseña", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Cuentausuario cu = scu.buscarCuentausuarioNombreIgual(loginUsernameTextfield.getText());
+            System.out.println(cu.getPasswordkey());
+            if (cu.getPasswordkey().equals(loginPasswordField.getText())) {
+                JOptionPane.showMessageDialog(this, "Acceso correcto", "Bienvenido", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Acceso denegado", "", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_loginIniciarSesionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -157,7 +193,7 @@ public class GUILogin extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Metal".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -174,24 +210,22 @@ public class GUILogin extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUILogin().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new GUILogin().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton loginIniciarSesion;
+    private javax.swing.JLabel loginLogoLabel;
+    private javax.swing.JPasswordField loginPasswordField;
     private javax.swing.JLabel loginPasswordLabel;
     private javax.swing.JButton loginSalir;
     private javax.swing.JLabel loginUsernameLabel;
+    private javax.swing.JTextField loginUsernameTextfield;
     // End of variables declaration//GEN-END:variables
 }
