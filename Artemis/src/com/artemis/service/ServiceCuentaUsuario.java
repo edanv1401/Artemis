@@ -3,7 +3,6 @@ package com.artemis.service;
 import com.artemis.entities.Cuentausuario;
 import com.artemis.entities.Persona;
 import com.artemis.util.AES;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
@@ -17,7 +16,7 @@ public class ServiceCuentaUsuario {
     AES aes = new AES();
     final String key1 = "shadow";
 
-    public void crearNuevoCuentaUsuario(String nombre, String pass, Integer persona) {
+    public void crearNuevoCuentaUsuario(String nombre, String pass, Persona persona) {
         EntityManager entitymanager = Persistence.createEntityManagerFactory("LoginPU").createEntityManager();
         entitymanager.getTransaction().begin();
         Cuentausuario cu = new Cuentausuario();
@@ -56,12 +55,12 @@ public class ServiceCuentaUsuario {
         entitymanager.close();
     }
 
-    public Persona buscarCuentausuarioNombreIgual(String user) {
+    public Cuentausuario buscarCuentausuarioNombreIgual(String user) {
         EntityManager entitymanager = Persistence.createEntityManagerFactory("LoginPU").createEntityManager();
         Query q = entitymanager.createQuery("select c from Cuentausuario c"
                 + " where c.username = :nom");
-        q.setParameter("nom", aes.encrypt(user, key1));
-        Persona p = (Persona) q.getSingleResult();
-        return p;
+        q.setParameter("nom", user);
+        Cuentausuario cu = (Cuentausuario) q.getSingleResult();
+        return cu;
     }
 }

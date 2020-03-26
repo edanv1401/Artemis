@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -42,8 +44,9 @@ public class Cuentausuario implements Serializable {
     private String username;
     @Column(name = "passwordkey")
     private String passwordkey;
-    @Column(name = "persona")
-    private Integer persona;
+    @JoinColumn(name = "persona", referencedColumnName = "documento")
+    @ManyToOne
+    private Persona persona;
 
     public Cuentausuario() {
     }
@@ -76,11 +79,11 @@ public class Cuentausuario implements Serializable {
         this.passwordkey = passwordkey;
     }
 
-    public Integer getPersona() {
+    public Persona getPersona() {
         return persona;
     }
 
-    public void setPersona(Integer persona) {
+    public void setPersona(Persona persona) {
         this.persona = persona;
     }
 
@@ -108,5 +111,5 @@ public class Cuentausuario implements Serializable {
     public String toString() {
         return "com.artemis.entities.Cuentausuario[ id=" + id + " ]";
     }
-    
+
 }
