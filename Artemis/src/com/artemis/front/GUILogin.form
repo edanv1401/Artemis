@@ -207,6 +207,10 @@
             </Property>
             <Property name="text" type="java.lang.String" value="&#xbf; No tienes una cuenta? haz clic en mi "/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel2MouseClicked"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jLabel2KeyTyped"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
