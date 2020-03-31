@@ -44,7 +44,6 @@ public class GUILogin extends javax.swing.JFrame {
         loginPasswordField = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        loginLogoLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -85,23 +84,18 @@ public class GUILogin extends javax.swing.JFrame {
         jLabel1.setText("Sistema ARTEMIS");
         jLabel1.setToolTipText("");
 
-        loginLogoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/logo.jpg"))); // NOI18N
-        loginLogoLabel.setText("jLabel3");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(loginLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(98, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(95, 95, 95))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-            .addComponent(loginLogoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
@@ -221,7 +215,6 @@ public class GUILogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton loginIniciarSesion;
-    private javax.swing.JLabel loginLogoLabel;
     private javax.swing.JPasswordField loginPasswordField;
     private javax.swing.JLabel loginPasswordLabel;
     private javax.swing.JButton loginSalir;
