@@ -9,7 +9,6 @@ import com.artemis.entities.Cuentausuario;
 import com.artemis.service.ServiceCuentaUsuario;
 import com.artemis.util.AES;
 import javax.swing.JOptionPane;
-import javax.swing.KeyStroke;
 
 /**
  *

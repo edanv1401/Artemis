@@ -5,11 +5,22 @@
  */
 package com.artemis.front;
 
+import com.artemis.entities.Persona;
+import com.artemis.service.ServiceCuentaUsuario;
+import com.artemis.service.ServicePersona;
+import com.artemis.util.AES;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author roca12
  */
 public class GUIcrear extends javax.swing.JFrame {
+
+    AES aes = new AES();
+    ServiceCuentaUsuario serviceCuentaUsuario = new ServiceCuentaUsuario();
+    ServicePersona servicePersona = new ServicePersona();
 
     /**
      * Creates new form GUIcrear
@@ -27,31 +38,216 @@ public class GUIcrear extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        crearPanel = new javax.swing.JPanel();
+        crearTituloPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        loginLogoLabel = new javax.swing.JLabel();
+        crearCrearButton = new javax.swing.JButton();
+        crearCancelarButton = new javax.swing.JButton();
+        crearNombreTextfield = new javax.swing.JTextField();
+        crearUserTextfield = new javax.swing.JTextField();
+        crearNombreLabel = new javax.swing.JLabel();
+        crearUserLabel = new javax.swing.JLabel();
+        crearPassLabel = new javax.swing.JLabel();
+        crearPassTextfield = new javax.swing.JPasswordField();
+        crearConfirmarTextfield = new javax.swing.JPasswordField();
+        crearConfirmarLabel = new javax.swing.JLabel();
+        crearEstadoLabel = new javax.swing.JLabel();
+        crearVerButton = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Crear Cuenta");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        crearPanel.setBackground(new java.awt.Color(153, 153, 153));
+
+        crearTituloPanel.setBackground(new java.awt.Color(0, 0, 0));
+
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 0));
+        jLabel1.setText("Sistema ARTEMIS");
+        jLabel1.setToolTipText("");
+
+        loginLogoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/logo.jpg"))); // NOI18N
+        loginLogoLabel.setText("jLabel3");
+
+        javax.swing.GroupLayout crearTituloPanelLayout = new javax.swing.GroupLayout(crearTituloPanel);
+        crearTituloPanel.setLayout(crearTituloPanelLayout);
+        crearTituloPanelLayout.setHorizontalGroup(
+            crearTituloPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, crearTituloPanelLayout.createSequentialGroup()
+                .addComponent(loginLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(95, 95, 95))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        crearTituloPanelLayout.setVerticalGroup(
+            crearTituloPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(loginLogoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
         );
+
+        crearCrearButton.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        crearCrearButton.setText("Crear cuenta");
+        crearCrearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crearCrearButtonActionPerformed(evt);
+            }
+        });
+
+        crearCancelarButton.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        crearCancelarButton.setText("Volver");
+        crearCancelarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crearCancelarButtonActionPerformed(evt);
+            }
+        });
+
+        crearNombreTextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crearNombreTextfieldActionPerformed(evt);
+            }
+        });
+
+        crearNombreLabel.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        crearNombreLabel.setText("Nombre");
+
+        crearUserLabel.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        crearUserLabel.setText("Username");
+
+        crearPassLabel.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        crearPassLabel.setText("Password");
+
+        crearConfirmarLabel.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
+        crearConfirmarLabel.setText("Confirmar Pass");
+
+        crearVerButton.setText("Ver");
+        crearVerButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                crearVerButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                crearVerButtonMouseReleased(evt);
+            }
+        });
+        crearVerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crearVerButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout crearPanelLayout = new javax.swing.GroupLayout(crearPanel);
+        crearPanel.setLayout(crearPanelLayout);
+        crearPanelLayout.setHorizontalGroup(
+            crearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(crearTituloPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(crearPanelLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(crearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, crearPanelLayout.createSequentialGroup()
+                        .addGroup(crearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(crearNombreLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(crearUserLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(crearPassLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(crearConfirmarLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(crearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(crearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(crearNombreTextfield, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                                .addComponent(crearUserTextfield))
+                            .addGroup(crearPanelLayout.createSequentialGroup()
+                                .addGroup(crearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(crearConfirmarTextfield, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                                    .addComponent(crearPassTextfield, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(9, 9, 9)
+                                .addComponent(crearVerButton)))
+                        .addGap(10, 10, 10))
+                    .addGroup(crearPanelLayout.createSequentialGroup()
+                        .addComponent(crearEstadoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(29, Short.MAX_VALUE))))
+            .addGroup(crearPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(crearCrearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(crearCancelarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+        );
+        crearPanelLayout.setVerticalGroup(
+            crearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, crearPanelLayout.createSequentialGroup()
+                .addComponent(crearTituloPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(crearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(crearNombreTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(crearNombreLabel))
+                .addGap(14, 14, 14)
+                .addGroup(crearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(crearUserTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(crearUserLabel))
+                .addGroup(crearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(crearPanelLayout.createSequentialGroup()
+                        .addGroup(crearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(crearPassTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(crearPassLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(crearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(crearConfirmarTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(crearConfirmarLabel)))
+                    .addGroup(crearPanelLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(crearVerButton)))
+                .addGap(18, 18, 18)
+                .addComponent(crearEstadoLabel)
+                .addGap(18, 18, 18)
+                .addGroup(crearPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(crearCrearButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(crearCancelarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
+        );
+
+        getContentPane().add(crearPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -1, 400, 300));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+    private void crearNombreTextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearNombreTextfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_crearNombreTextfieldActionPerformed
+
+    private void crearVerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearVerButtonActionPerformed
+
+    }//GEN-LAST:event_crearVerButtonActionPerformed
+
+    private void crearVerButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crearVerButtonMousePressed
+        crearPassTextfield.setEchoChar('\u0000');
+        crearConfirmarTextfield.setEchoChar('\u0000');
+    }//GEN-LAST:event_crearVerButtonMousePressed
+
+    private void crearVerButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crearVerButtonMouseReleased
+        crearPassTextfield.setEchoChar('*');
+        crearConfirmarTextfield.setEchoChar('*');
+    }//GEN-LAST:event_crearVerButtonMouseReleased
+
+    private void crearCrearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearCrearButtonActionPerformed
+        try {
+            servicePersona.crearNuevaPersona(crearNombreTextfield.getText().trim());
+            List<Persona> p = servicePersona.buscarPersonaNombreIgual(crearNombreTextfield.getText().trim());
+            serviceCuentaUsuario.crearNuevoCuentaUsuario(crearUserTextfield.getText(), crearPassTextfield.getText(), p.get(0));
+            JOptionPane.showMessageDialog(this, "Creación con exito", "Info", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_crearCrearButtonActionPerformed
+
+    private void crearCancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearCancelarButtonActionPerformed
+        GUILogin l = new GUILogin();
+        l.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_crearCancelarButtonActionPerformed
+
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -59,25 +255,31 @@ public class GUIcrear extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIcrear.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIcrear.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIcrear.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GUIcrear.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUIcrear().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new GUIcrear().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton crearCancelarButton;
+    private javax.swing.JLabel crearConfirmarLabel;
+    private javax.swing.JPasswordField crearConfirmarTextfield;
+    private javax.swing.JButton crearCrearButton;
+    private javax.swing.JLabel crearEstadoLabel;
+    private javax.swing.JLabel crearNombreLabel;
+    private javax.swing.JTextField crearNombreTextfield;
+    private javax.swing.JPanel crearPanel;
+    private javax.swing.JLabel crearPassLabel;
+    private javax.swing.JPasswordField crearPassTextfield;
+    private javax.swing.JPanel crearTituloPanel;
+    private javax.swing.JLabel crearUserLabel;
+    private javax.swing.JTextField crearUserTextfield;
+    private javax.swing.JButton crearVerButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel loginLogoLabel;
     // End of variables declaration//GEN-END:variables
 }
