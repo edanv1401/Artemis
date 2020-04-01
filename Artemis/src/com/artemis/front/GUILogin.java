@@ -87,8 +87,10 @@ public class GUILogin extends javax.swing.JFrame {
         loginPasswordLabel.setText("Password");
 
         loginUsernameTextfield.setBackground(new java.awt.Color(51, 51, 51));
+        loginUsernameTextfield.setForeground(new java.awt.Color(255, 255, 255));
 
         loginPasswordField.setBackground(new java.awt.Color(51, 51, 51));
+        loginPasswordField.setForeground(new java.awt.Color(255, 255, 255));
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -188,9 +190,8 @@ public class GUILogin extends javax.swing.JFrame {
         } else if (loginPasswordField.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Debe ingresar la contraseña", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            Cuentausuario cu = scu.buscarCuentausuarioNombreIgual((loginUsernameTextfield.getText()));
-            System.out.println(cu.getPasswordkey());
-            if (cu.getPasswordkey().equals((loginPasswordField.getText()))) {
+            Cuentausuario cu = scu.buscarCuentausuarioNombreIgual((aes.encrypt(loginUsernameTextfield.getText(),"shadow")));
+            if (aes.encrypt(cu.getPasswordkey(),"shadow").equals((aes.encrypt(loginPasswordField.getText(),"shadow")))) {
                 JOptionPane.showMessageDialog(this, "Acceso correcto", "Bienvenido", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "Acceso denegado", "Error inicio de sesion", JOptionPane.ERROR_MESSAGE);

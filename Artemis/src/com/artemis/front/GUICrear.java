@@ -5,9 +5,13 @@
  */
 package com.artemis.front;
 
+import com.artemis.entities.Cuentausuario;
 import com.artemis.entities.Persona;
 import com.artemis.service.ServiceCuentaUsuario;
+import com.artemis.service.ServicePersona;
 import javax.swing.JOptionPane;
+import com.artemis.util.AES;
+import java.util.List;
 
 /**
  *
@@ -15,12 +19,13 @@ import javax.swing.JOptionPane;
  */
 public class GUICrear extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GUICrear
-     */
+    ServiceCuentaUsuario scu = new ServiceCuentaUsuario();
+    ServicePersona sp = new ServicePersona();
+    AES aes = new AES();
+
     public GUICrear() {
         initComponents();
-        pack();
+
     }
 
     /**
@@ -36,8 +41,6 @@ public class GUICrear extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         nombreUsuarioTextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        documentoTextField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         contraseñaField = new javax.swing.JPasswordField();
         crearCuenta = new javax.swing.JButton();
@@ -68,18 +71,6 @@ public class GUICrear extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Ingresa el nombre de usuario");
-
-        documentoTextField.setBackground(new java.awt.Color(51, 51, 51));
-        documentoTextField.setForeground(new java.awt.Color(255, 255, 255));
-        documentoTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                documentoTextFieldActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Ingrese su documento");
 
         jLabel4.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
@@ -122,6 +113,11 @@ public class GUICrear extends javax.swing.JFrame {
 
         nombreTextField.setBackground(new java.awt.Color(51, 51, 51));
         nombreTextField.setForeground(new java.awt.Color(255, 255, 255));
+        nombreTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombreTextFieldActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
@@ -135,42 +131,20 @@ public class GUICrear extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nombreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5)
+                    .addComponent(contraseñaField, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(confirmacionField, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
+                    .addComponent(nombreUsuarioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(crearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(retornarAnteriorMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(nombreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(documentoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel5))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(contraseñaField, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(confirmacionField, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(nombreUsuarioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(crearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(retornarAnteriorMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -181,30 +155,26 @@ public class GUICrear extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nombreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(documentoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addGap(3, 3, 3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nombreUsuarioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
-                .addGap(3, 3, 3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(contraseñaField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(confirmacionField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(retornarAnteriorMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(crearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(crearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(retornarAnteriorMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 360));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -214,15 +184,22 @@ public class GUICrear extends javax.swing.JFrame {
     }//GEN-LAST:event_nombreUsuarioTextFieldActionPerformed
 
     private void crearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearCuentaActionPerformed
-       if (nombreTextField.getText().equals("")||documentoTextField.getText().equals("")||
-              nombreUsuarioTextField.getText().equals("")||contraseñaField.getText().equals("")||confirmacionField.getText().equals("") ){
-            JOptionPane.showMessageDialog(this, "Debe llenar todos los campos, no sea imbecil", "Error", JOptionPane.ERROR_MESSAGE);
-        }else if(!(contraseñaField.getText().equals(confirmacionField.getText()))){
+        if (!(contraseñaField.getText().equals(confirmacionField.getText()))) {
             JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
-        }else{
-            ServiceCuentaUsuario scu=new ServiceCuentaUsuario();
-            scu.crearNuevoCuentaUsuario(nombreTextField.getText(), contraseñaField.getText(), new Persona());
-            JOptionPane.showMessageDialog(this,"Creacion con exito","Confirmación",JOptionPane.OK_OPTION);
+            confirmacionField.setText("");
+            contraseñaField.setText("");
+        } else if (nombreTextField.getText().equals("") || contraseñaField.getText().equals("") || confirmacionField.getText().equals("")
+                || nombreUsuarioTextField.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Debe llenar todos los espacios", "Informacion", JOptionPane.WARNING_MESSAGE);
+        } else {
+            sp.crearNuevaPersona(nombreTextField.getText().trim());
+            List<Persona> p = sp.buscarPersonaNombreIgual(nombreTextField.getText().trim());
+            scu.crearNuevoCuentaUsuario(nombreUsuarioTextField.getText(), contraseñaField.getText(), p.get(0));
+            JOptionPane.showMessageDialog(this, "Creación con exito", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            nombreTextField.setText("");
+            confirmacionField.setText("");
+            contraseñaField.setText("");
+            nombreUsuarioTextField.setText("");
         }
     }//GEN-LAST:event_crearCuentaActionPerformed
 
@@ -231,15 +208,15 @@ public class GUICrear extends javax.swing.JFrame {
     }//GEN-LAST:event_contraseñaFieldActionPerformed
 
     private void retornarAnteriorMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retornarAnteriorMenuActionPerformed
-        GUILogin gl=new GUILogin();
+        GUILogin gl = new GUILogin();
         this.setVisible(false);
         gl.setLocationRelativeTo(null);
         gl.setVisible(true);
     }//GEN-LAST:event_retornarAnteriorMenuActionPerformed
 
-    private void documentoTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_documentoTextFieldActionPerformed
+    private void nombreTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_documentoTextFieldActionPerformed
+    }//GEN-LAST:event_nombreTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,7 +248,7 @@ public class GUICrear extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                GUICrear gc=new GUICrear();
+                GUICrear gc = new GUICrear();
                 gc.setVisible(true);
                 gc.setLocationRelativeTo(null);
             }
@@ -282,10 +259,8 @@ public class GUICrear extends javax.swing.JFrame {
     private javax.swing.JPasswordField confirmacionField;
     private javax.swing.JPasswordField contraseñaField;
     private javax.swing.JButton crearCuenta;
-    private javax.swing.JTextField documentoTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

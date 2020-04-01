@@ -21,9 +21,9 @@ public class ServiceCuentaUsuario {
         entitymanager.getTransaction().begin();
         Cuentausuario cu = new Cuentausuario();
         cu.setId(null);
+        cu.setPersona(persona);
         cu.setUsername(aes.encrypt(nombre, key1));
         cu.setPasswordkey(aes.encrypt(pass, key1));
-        cu.setPersona(persona);
         entitymanager.persist(cu);
         entitymanager.getTransaction().commit();
         entitymanager.close();
@@ -59,7 +59,7 @@ public class ServiceCuentaUsuario {
         EntityManager entitymanager = Persistence.createEntityManagerFactory("LoginPU").createEntityManager();
         Query q = entitymanager.createQuery("select c from Cuentausuario c"
                 + " where c.username = :nom");
-        q.setParameter("nom", user);
+        q.setParameter("nom", aes.decrypt(user,key1));
         Cuentausuario cu = (Cuentausuario) q.getSingleResult();
         return cu;
     }
