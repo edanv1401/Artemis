@@ -5,11 +5,19 @@
  */
 package com.artemis.front;
 
+import com.artemis.entities.Persona;
+import com.artemis.service.ServiceCuentaUsuario;
+import com.artemis.service.ServicePersona;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Usuario
  */
 public class GUICrearUsuario extends javax.swing.JFrame {
+        ServicePersona sp = new ServicePersona();
+        ServiceCuentaUsuario scu = new ServiceCuentaUsuario();
 
     /**
      * Creates new form GUICrearUsuario
@@ -38,8 +46,6 @@ public class GUICrearUsuario extends javax.swing.JFrame {
         jPasswordContraseña2 = new javax.swing.JPasswordField();
         jTextNombre = new javax.swing.JTextField();
         jTextUsuario = new javax.swing.JTextField();
-        jDocumento = new javax.swing.JLabel();
-        jTextDocumento = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -57,6 +63,11 @@ public class GUICrearUsuario extends javax.swing.JFrame {
         jContraseña.setText("Ingresar contraseña *");
 
         jConfirmar.setText("Confirmar");
+        jConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jConfirmarActionPerformed(evt);
+            }
+        });
 
         jCancelar.setText("Cancelar");
         jCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -76,11 +87,6 @@ public class GUICrearUsuario extends javax.swing.JFrame {
 
         jTextUsuario.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
 
-        jDocumento.setFont(new java.awt.Font("Corbel", 3, 14)); // NOI18N
-        jDocumento.setText("Ingresar documento");
-
-        jTextDocumento.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
-
         jLabel1.setFont(new java.awt.Font("Corbel", 3, 24)); // NOI18N
         jLabel1.setText("--Crear Nuevo Usuario--");
 
@@ -93,14 +99,12 @@ public class GUICrearUsuario extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jDocumento)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jConfirmar)
                                     .addComponent(jConfirmarContraseña))
                                 .addGap(37, 37, 37)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jPasswordContraseña2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -139,11 +143,7 @@ public class GUICrearUsuario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jConfirmarContraseña)
                     .addComponent(jPasswordContraseña2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jDocumento)
-                    .addComponent(jTextDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -160,6 +160,28 @@ public class GUICrearUsuario extends javax.swing.JFrame {
         login.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jCancelarActionPerformed
+
+    private void jConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jConfirmarActionPerformed
+        if(!(jPasswordContraseña.getText().equals(jPasswordContraseña2.getText()))){
+            JOptionPane.showMessageDialog(this, "No coinciden las contraseñas", "Error", JOptionPane.ERROR_MESSAGE);
+            jPasswordContraseña.setText("");
+            jPasswordContraseña2.setText("");
+        }else if(jTextNombre.getText().equals("")||jTextUsuario.getText().equals("")||jPasswordContraseña.getText().equals("")||jPasswordContraseña2.getText().equals("")){
+         JOptionPane.showMessageDialog(this, "Llene todo los espacios", "Advertencia", JOptionPane.ERROR_MESSAGE);
+        }else {
+            GUILogin login = new GUILogin();
+            sp.crearNuevaPersona(jTextNombre.getText().trim());
+            List<Persona> p = sp.buscarPersonaNombreIgual(jTextNombre.getText().trim());
+            scu.crearNuevoCuentaUsuario(jTextUsuario.getText(), jPasswordContraseña.getText(), p.get(0));
+            JOptionPane.showMessageDialog(this, "Creación con exito", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            jTextNombre.setText("");
+            jPasswordContraseña2.setText("");
+            jPasswordContraseña.setText("");
+            jTextUsuario.setText("");
+            login.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jConfirmarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,13 +223,11 @@ public class GUICrearUsuario extends javax.swing.JFrame {
     private javax.swing.JButton jConfirmar;
     private javax.swing.JLabel jConfirmarContraseña;
     private javax.swing.JLabel jContraseña;
-    private javax.swing.JLabel jDocumento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jNombre;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordContraseña;
     private javax.swing.JPasswordField jPasswordContraseña2;
-    private javax.swing.JTextField jTextDocumento;
     private javax.swing.JTextField jTextNombre;
     private javax.swing.JTextField jTextUsuario;
     private javax.swing.JLabel jUsuario;
