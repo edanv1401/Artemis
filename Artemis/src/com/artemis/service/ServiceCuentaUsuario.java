@@ -59,7 +59,7 @@ public class ServiceCuentaUsuario {
         EntityManager entitymanager = Persistence.createEntityManagerFactory("LoginPU").createEntityManager();
         Query q = entitymanager.createQuery("select c from Cuentausuario c"
                 + " where c.username = :nom");
-        q.setParameter("nom", aes.decrypt(user,key1));
+        q.setParameter("nom", user);
         Cuentausuario cu = (Cuentausuario) q.getSingleResult();
         return cu;
     }

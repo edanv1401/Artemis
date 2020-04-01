@@ -191,7 +191,7 @@ public class GUILogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Debe ingresar la contraseña", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             Cuentausuario cu = scu.buscarCuentausuarioNombreIgual((aes.encrypt(loginUsernameTextfield.getText(),"shadow")));
-            if (aes.encrypt(cu.getPasswordkey(),"shadow").equals((aes.encrypt(loginPasswordField.getText(),"shadow")))) {
+            if (cu.getPasswordkey().equals((aes.encrypt(loginPasswordField.getText(),"shadow")))) {
                 JOptionPane.showMessageDialog(this, "Acceso correcto", "Bienvenido", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "Acceso denegado", "Error inicio de sesion", JOptionPane.ERROR_MESSAGE);
