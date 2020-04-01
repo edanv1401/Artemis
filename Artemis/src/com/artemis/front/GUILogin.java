@@ -18,6 +18,7 @@ public class GUILogin extends javax.swing.JFrame {
 
     ServiceCuentaUsuario scu = new ServiceCuentaUsuario();
     AES aes = new AES();
+    final   String key1 = "shadow";
 
     /**
      * Creates new form GUILogin
@@ -77,6 +78,12 @@ public class GUILogin extends javax.swing.JFrame {
         loginPasswordLabel.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         loginPasswordLabel.setText("Password");
 
+        loginPasswordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginPasswordFieldActionPerformed(evt);
+            }
+        });
+
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
@@ -107,6 +114,11 @@ public class GUILogin extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 0, 0));
         jLabel2.setText("¿ No tienes una cuenta? haz clic en mi ");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -172,15 +184,25 @@ public class GUILogin extends javax.swing.JFrame {
         } else if (loginPasswordField.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Debe ingresar la contraseña", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            Cuentausuario cu = scu.buscarCuentausuarioNombreIgual(loginUsernameTextfield.getText());
+            Cuentausuario cu = scu.buscarCuentausuarioNombreIgual(aes.encrypt(loginUsernameTextfield.getText(),key1));
             System.out.println(cu.getPasswordkey());
-            if (cu.getPasswordkey().equals(loginPasswordField.getText())) {
+            if (cu.getPasswordkey().equals(aes.encrypt(loginPasswordField.getText(), key1))) {
                 JOptionPane.showMessageDialog(this, "Acceso correcto", "Bienvenido", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(this, "Acceso denegado", "", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_loginIniciarSesionActionPerformed
+
+    private void loginPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginPasswordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginPasswordFieldActionPerformed
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        GUIcreateUser crear =  new GUIcreateUser();
+        crear.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     /**
      * @param args the command line arguments

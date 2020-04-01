@@ -9,7 +9,7 @@ import javax.persistence.Query;
 
 public class ServicePersona {
 
-    public void crearNuevaPersona(String nombre) {
+    public Persona crearNuevaPersona(String nombre) {
         EntityManager entitymanager = Persistence.createEntityManagerFactory("LoginPU").createEntityManager();
         entitymanager.getTransaction().begin();
         Persona p = new Persona();
@@ -18,6 +18,7 @@ public class ServicePersona {
         entitymanager.persist(p);
         entitymanager.getTransaction().commit();
         entitymanager.close();
+        return p;
     }
 
     public void actualizarPersona(Integer id, String nombre) {
